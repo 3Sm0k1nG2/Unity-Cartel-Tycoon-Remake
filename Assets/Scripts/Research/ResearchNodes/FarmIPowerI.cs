@@ -1,6 +1,6 @@
 using System;
 
-public class FarmIPowerI : IMilitaryAssistedResearch, IResearch
+public class FarmIPowerI : IMilitaryAssistedResearch
 {
     private ResearchState prevState;
 
@@ -16,18 +16,18 @@ public class FarmIPowerI : IMilitaryAssistedResearch, IResearch
 
     public object[] Specifications { get; }
 
-    public FarmIPowerI(IResearchTree RT)
+    public FarmIPowerI()
     {
         prevState = ResearchState.Unavailable;
 
         Name = "Power I";
-        Description = RT.Descriptions[0x3];
+        Description = Global.Instance.ResearchDescriptions.POWER_I;
 
         IsMilitarySupportRequired = true;
 
         Cost = 500;
         Duration = new GameTimeDuration(0, 0, 2);
-        State = RT.IsMilitarySupportAided ? ResearchState.Unavailable : ResearchState.Locked;
+        State = ResearchState.Locked;
 
         Specifications = new object[]
         {

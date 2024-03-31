@@ -9,10 +9,10 @@ public class RoadSandy : IResearch
 
     public object[] Specifications { get; }
 
-    public RoadSandy(IResearchTree RT)
+    public RoadSandy()
     {
         Name = "Road: Sandy";
-        Description = RT.Descriptions[0x4];
+        Description = Global.Instance.ResearchDescriptions.ROAD_SANDY;
 
         Cost = 0;
         Duration = new GameTimeDuration();

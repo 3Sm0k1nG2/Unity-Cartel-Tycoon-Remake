@@ -9,10 +9,10 @@ public class FarmI : IResearch
 
     public object[] Specifications { get; }
 
-    public FarmI(IResearchTree RT)
+    public FarmI()
     {
         Name = "Farm I";
-        Description = RT.Descriptions[0x1];
+        Description = Global.Instance.ResearchDescriptions.UPGRADE_UNLOCK_FARM_I;
         
         Cost = 2000;
         Duration = new GameTimeDuration(0,2,2,24);

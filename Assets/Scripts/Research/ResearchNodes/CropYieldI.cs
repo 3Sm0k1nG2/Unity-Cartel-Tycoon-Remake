@@ -9,10 +9,10 @@ public class CropYieldI : IResearch
 
     public object[] Specifications { get; }
 
-    public CropYieldI(IResearchTree RT)
+    public CropYieldI()
     {
         Name = "Crop Yield I";
-        Description = RT.Descriptions[0x2];
+        Description = Global.Instance.ResearchDescriptions.PASSIVE_INCREASE_PRODUCT_VOLUME;
 
         Cost = 1000;
         Duration = new GameTimeDuration(0, 1);

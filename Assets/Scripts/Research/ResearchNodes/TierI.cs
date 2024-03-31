@@ -9,10 +9,10 @@ public class TierI : IResearch
 
     public object[] Specifications { get; }
 
-    public TierI(IResearchTree RT)
+    public TierI()
     {
         Name = "Tier I";
-        Description = RT.Descriptions[0x0];
+        Description = Global.Instance.ResearchDescriptions.TIER_I;
         
         Cost = 0;
         Duration = new GameTimeDuration();
