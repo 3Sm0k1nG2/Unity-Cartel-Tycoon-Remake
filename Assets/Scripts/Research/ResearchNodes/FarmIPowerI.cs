@@ -13,10 +13,10 @@ public class FarmIPowerI : IMilitaryAssistedResearch
     public GameTimeDuration Duration { get; }
     public ResearchState State { get; private set; }
 
-
+    public IBuildingConfig[] AffectedBuildingConfigs { get; }
     public object[] Specifications { get; }
 
-    public FarmIPowerI()
+    public FarmIPowerI(Game game)
     {
         prevState = ResearchState.Unavailable;
 
@@ -28,7 +28,8 @@ public class FarmIPowerI : IMilitaryAssistedResearch
         Cost = 500;
         Duration = new GameTimeDuration(0, 0, 2);
         State = ResearchState.Locked;
-
+        
+        AffectedBuildingConfigs = new IBuildingConfig[] { game.BS.Configs.FarmIConfig };
         Specifications = new object[]
         {
             "Affects Farm I",

@@ -7,9 +7,10 @@ public class RoadSandy : IResearch
     public GameTimeDuration Duration { get; }
     public ResearchState State { get; private set; }
 
+    public IBuildingConfig[] AffectedBuildingConfigs { get; }
     public object[] Specifications { get; }
 
-    public RoadSandy()
+    public RoadSandy(Game game)
     {
         Name = "Road: Sandy";
         Description = Global.Instance.ResearchDescriptions.ROAD_SANDY;
@@ -18,6 +19,7 @@ public class RoadSandy : IResearch
         Duration = new GameTimeDuration();
         State = ResearchState.Researched;
 
+        AffectedBuildingConfigs = new IBuildingConfig[0];
         Specifications = new object[]
         {
             "Construction cost Free",

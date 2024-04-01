@@ -7,6 +7,7 @@ public interface IResearch
     public GameTimeDuration Duration { get; }
     public ResearchState State { get; }
 
+    public IBuildingConfig[] AffectedBuildingConfigs { get; }
     public object[] Specifications { get; }
 
     public void ChangeState(ResearchState state);

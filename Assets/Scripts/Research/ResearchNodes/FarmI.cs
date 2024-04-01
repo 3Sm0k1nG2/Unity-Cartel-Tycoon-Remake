@@ -7,9 +7,10 @@ public class FarmI : IResearch
     public GameTimeDuration Duration { get; }
     public ResearchState State { get; private set; }
 
+    public IBuildingConfig[] AffectedBuildingConfigs { get; }
     public object[] Specifications { get; }
 
-    public FarmI()
+    public FarmI(Game game)
     {
         Name = "Farm I";
         Description = Global.Instance.ResearchDescriptions.UPGRADE_UNLOCK_FARM_I;
@@ -17,6 +18,8 @@ public class FarmI : IResearch
         Cost = 2000;
         Duration = new GameTimeDuration(0,2,2,24);
         State = ResearchState.Researchable;
+
+        AffectedBuildingConfigs = new IBuildingConfig[] { game.BS.Configs.FarmIConfig };
 
         Specifications = new object[]
         {

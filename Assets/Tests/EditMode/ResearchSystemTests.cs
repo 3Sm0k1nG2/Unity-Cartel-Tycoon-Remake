@@ -1,12 +1,14 @@
 using NUnit.Framework;
+using System.Security.Cryptography;
 
 public class ResearchSystemTests
 {
     [Test]
     public void InitialState()
     {
-        var RS = new ResearchSystem();
-        
+        var game = new Game();
+        var RS = game.RS;
+
         Assert.AreEqual(ResearchState.Researched,   RS.Researches.TierI.State);
         Assert.AreEqual(ResearchState.Researchable, RS.Researches.FarmI.State);
         Assert.AreEqual(ResearchState.Unavailable,  RS.Researches.CropYieldI.State);
@@ -17,7 +19,8 @@ public class ResearchSystemTests
     [Test]
     public void Research_ResearchedFarmI()
     {
-        var RS = new ResearchSystem();
+        var game = new Game();
+        var RS = game.RS;
 
         RS.Research(RS.Researches.FarmI);
         Assert.AreEqual(ResearchState.Researched, RS.Researches.FarmI.State);
@@ -26,7 +29,8 @@ public class ResearchSystemTests
     [Test]
     public void Research_ResearchedFarmI_Should_UnlockCropYieldI()
     {
-        var RS = new ResearchSystem();
+        var game = new Game();
+        var RS = game.RS;
 
         RS.Research(RS.Researches.FarmI);
         Assert.AreEqual(ResearchState.Researchable, RS.Researches.CropYieldI.State);
@@ -35,7 +39,8 @@ public class ResearchSystemTests
     [Test]
     public void Research_ResearchedFarmIWithoutMilitaryAid_Should_StillLockedPowerI()
     {
-        var RS = new ResearchSystem();
+        var game = new Game();
+        var RS = game.RS;
 
         RS.Research(RS.Researches.FarmI);
         Assert.AreEqual(ResearchState.Locked, RS.Researches.FarmIPowerI.State);
@@ -90,5 +95,23 @@ public class ResearchSystemTests
 
         game.Military.ActiveResearchSupport();
         Assert.AreEqual(ResearchState.Researched, RS.Researches.FarmIPowerI.State);
+    }
+
+    [Test]
+    public void Research_ResearchedCropYieldI_Should_UpdateFarmIConfig()
+    {
+        var game = new Game();
+        var RS = game.RS;
+
+        var defaultFarmIConfig = new FarmIConfig();
+
+        RS.Research(RS.Researches.FarmI);
+        RS.Research(RS.Researches.CropYieldI);
+        Assert.AreEqual(ResearchState.Researched, RS.Researches.CropYieldI.State);
+
+        for(var i = 0; i < game.BS.Configs.FarmIConfig.ProducableProducts.Length; i++)
+        {
+            Assert.AreEqual(defaultFarmIConfig.ProducableProducts[i].ProductionQuantity + 1, game.BS.Configs.FarmIConfig.ProducableProducts[i].ProductionQuantity);
+        }
     }
 }

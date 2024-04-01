@@ -7,9 +7,10 @@ public class TierI : IResearch
     public GameTimeDuration Duration { get; }
     public ResearchState State { get; private set; }
 
+    public IBuildingConfig[] AffectedBuildingConfigs { get; }
     public object[] Specifications { get; }
 
-    public TierI()
+    public TierI(Game game)
     {
         Name = "Tier I";
         Description = Global.Instance.ResearchDescriptions.TIER_I;
@@ -18,6 +19,7 @@ public class TierI : IResearch
         Duration = new GameTimeDuration();
         State = ResearchState.Researched;
 
+        AffectedBuildingConfigs = new IBuildingConfig[0];
         Specifications = new object[0];
     }
 

@@ -2,6 +2,8 @@
 
 public class ResearchSystem
 {
+    private Game _game;
+
     private Dictionary<IResearch, IResearch[]> ResearchUnlocks { get; }
     public IMilitaryAssistedResearch[] MilitaryAssistedResearches { get; }
 
@@ -11,9 +13,11 @@ public class ResearchSystem
     public byte ResearchProgress { get; }
     public IList<IResearch> ResearchQueue { get; }
 
-    public ResearchSystem()
+    public ResearchSystem(Game game)
     {
-        Researches = new Researches();
+        _game = game;
+
+        Researches = new Researches(_game);
 
         ResearchUnlocks = new Dictionary<IResearch, IResearch[]>()
         {
@@ -61,8 +65,13 @@ public class ResearchSystem
     private void OnResearched()
     {
         CurrentResearchTarget.ChangeState(ResearchState.Researched);
-        CurrentResearchTarget = null;
 
+        foreach( var config in CurrentResearchTarget.AffectedBuildingConfigs)
+        {
+            config.UnlockUpgrade(_game, CurrentResearchTarget);
+        }
+
+        CurrentResearchTarget = null;
         BeginNextResearch();
     }
 
